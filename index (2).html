@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alysha Khanza Dwi Avianti | Portofolio Sains Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F0;
+    --ink:#14201E;
+    --teal:#2E6F6A;
+    --teal-dark:#1F4E4A;
+    --gold:#C9A227;
+    --card:#FFFFFF;
+    --muted:#5C6D6A;
+    --line:#D8DBD3;
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 34px 34px;
+    background-position: -1px -1px;
+  }
+
+  a{color:var(--teal-dark);}
+  ::selection{background:var(--gold); color:var(--ink);}
+
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(8px);
+    background:rgba(244,245,240,0.85);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; max-width:1080px; margin:0 auto;
+  }
+  .nav .mark{
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px; font-weight:600; letter-spacing:0.02em;
+    color:var(--teal-dark);
+  }
+  .nav ul{
+    list-style:none; display:flex; gap:28px; margin:0; padding:0;
+  }
+  .nav a{
+    text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:500;
+    position:relative;
+  }
+  .nav a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px;
+    background:var(--gold); transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .nav a:hover::after{transform:scaleX(1);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 64px;
+    display:grid; grid-template-columns: 1.1fr 0.9fr; gap:48px; align-items:center;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--teal-dark); font-weight:600;
+    display:inline-flex; align-items:center; gap:8px; margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:""; width:7px; height:7px; border-radius:50%;
+    background:var(--gold); display:inline-block;
+  }
+  h1.name{
+    font-family:'Fraunces', serif;
+    font-size:clamp(2.4rem, 4.2vw, 3.6rem);
+    font-weight:700; line-height:1.06; margin:0 0 18px;
+    letter-spacing:-0.01em;
+  }
+  h1.name em{font-style:italic; font-weight:500; color:var(--teal-dark);}
+  .hero p.lead{
+    font-size:17.5px; color:var(--muted); max-width:46ch; margin:0 0 28px;
+  }
+  .hero-links{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14.5px;
+    padding:11px 20px; border-radius:999px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-solid{background:var(--teal-dark); color:#fff;}
+  .btn-solid:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(31,78,74,0.25);}
+  .btn-ghost{border:1.5px solid var(--line); color:var(--ink); background:var(--card);}
+  .btn-ghost:hover{transform:translateY(-2px); border-color:var(--teal-dark);}
+
+  /* signature visual: Newton-Raphson convergence */
+  .figure{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px; box-shadow:0 1px 0 rgba(20,32,30,0.03);
+  }
+  .figure .cap{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--muted);
+    margin-top:10px; display:flex; justify-content:space-between;
+  }
+  .photo-figure{display:flex; flex-direction:column; align-items:center;}
+  .profile-photo{
+    width:220px; height:220px; border-radius:50%; object-fit:cover;
+    border:4px solid var(--paper); outline:2px solid var(--teal);
+    outline-offset:6px;
+  }
+  .photo-figure .cap{width:100%; max-width:220px;}
+  #nr-path, #nr-tan1, #nr-tan2, #nr-tan3, .nr-dot{display:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    #nr-path, #nr-tan1, #nr-tan2, #nr-tan3{animation:none; stroke-dashoffset:0;}
+    .nr-dot{animation:none; opacity:1;}
+    .reveal{opacity:1 !important; transform:none !important;}
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  section{padding:64px 0;}
+  .section-head{margin-bottom:36px;}
+  .section-head .eyebrow{margin-bottom:10px;}
+  .section-head h2{
+    font-family:'Fraunces', serif; font-size:clamp(1.6rem,2.6vw,2.1rem);
+    font-weight:600; margin:0;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  .about-grid p{color:var(--muted); font-size:15.5px;}
+  .stat-row{
+    display:flex; gap:0; border-top:1px solid var(--line);
+  }
+  .stat{
+    flex:1; padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .stat:not(:last-child){border-right:1px solid var(--line);}
+  .stat b{
+    font-family:'JetBrains Mono', monospace; font-size:22px; color:var(--teal-dark); display:block;
+  }
+  .stat span{font-size:12.5px; color:var(--muted);}
+
+  /* ---------- PROJECTS ---------- */
+  .projects-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:22px;
+  }
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; display:flex; flex-direction:column; gap:14px;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px rgba(20,32,30,0.08);
+    border-color:var(--teal-dark);
+  }
+  .tag-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .tag{
+    font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:500;
+    padding:4px 9px; border-radius:6px; background:#EEF2EF; color:var(--teal-dark);
+    border:1px solid var(--line);
+  }
+  .tag.gold{background:#FBF3DC; color:#8A6D14;}
+  .card h3{
+    font-family:'Fraunces', serif; font-size:1.28rem; margin:0; font-weight:600;
+  }
+  .card p{margin:0; color:var(--muted); font-size:14.5px;}
+  .card .links{display:flex; gap:16px; margin-top:auto; padding-top:6px;}
+  .card .links a{
+    font-size:13.5px; font-weight:600; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .card .links a::after{content:"→"; transition:transform .2s ease;}
+  .card .links a:hover::after{transform:translateX(3px);}
+  .card.collab{border-style:dashed;}
+  .note{
+    font-size:12.5px; color:var(--muted); background:#F0F1EB; border-radius:8px;
+    padding:8px 12px; border-left:3px solid var(--gold);
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-table{border-top:1px solid var(--line);}
+  .skill-row{
+    display:grid; grid-template-columns: 180px 1fr 60px;
+    align-items:center; gap:18px;
+    padding:13px 0; border-bottom:1px solid var(--line);
+  }
+  .skill-row .label{font-weight:600; font-size:14.5px;}
+  .skill-row .track{height:6px; background:#E7EAE4; border-radius:99px; overflow:hidden;}
+  .skill-row .fill{height:100%; background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:99px;}
+  .skill-row .pct{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted); text-align:right;
+  }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{
+    padding:70px 0 50px; border-top:1px solid var(--line); margin-top:20px;
+  }
+  .contact-box{
+    background:var(--teal-dark); color:#fff; border-radius:20px; padding:48px;
+    display:grid; grid-template-columns:1.2fr 1fr; gap:32px; align-items:center;
+  }
+  .contact-box h2{font-family:'Fraunces', serif; font-size:1.9rem; margin:0 0 10px; font-weight:600;}
+  .contact-box p{color:#D7E4E2; margin:0; font-size:15px;}
+  .contact-links{display:flex; flex-direction:column; gap:14px;}
+  .contact-links a{
+    color:#fff; text-decoration:none; font-weight:600; font-size:15px;
+    display:flex; align-items:center; gap:10px; padding:12px 16px;
+    background:rgba(255,255,255,0.08); border-radius:10px; border:1px solid rgba(255,255,255,0.18);
+    transition:background .2s ease;
+  }
+  .contact-links a:hover{background:rgba(255,255,255,0.16);}
+  .fine{
+    text-align:center; margin-top:40px; font-size:12.5px; color:var(--muted);
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+
+  @media (max-width: 860px){
+    .hero{grid-template-columns:1fr; padding-top:64px;}
+    .about-grid{grid-template-columns:1fr;}
+    .projects-grid{grid-template-columns:1fr;}
+    .contact-box{grid-template-columns:1fr;}
+    .nav ul{gap:16px;}
+    .nav ul li:nth-child(1){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <span class="mark">alysha.dev/portofolio</span>
+    <ul>
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#proyek">Proyek</a></li>
+      <li><a href="#skill">Skill</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Mahasiswi Sains Data</div>
+      <h1 class="name">Alysha Khanza<br>Dwi Avianti</h1>
+      <p class="lead">Mahasiswi Sains Data di <strong>UPN "Veteran" Jawa Timur</strong>. Mahasiswi Sains Data yang senang mengolah data mentah jadi insight yang bisa dipakai untuk mengambil keputusan, mulai dari statistik, machine learning, sampai pengembangan aplikasi.</p>
+      <div class="hero-links">
+        <a class="btn btn-solid" href="#proyek">Lihat proyek</a>
+        <a class="btn btn-ghost" href="#kontak">Hubungi saya</a>
+      </div>
+    </div>
+
+    <div class="figure photo-figure">
+      <img src="https://github.com/alyshakhanza.png" alt="Foto profil Alysha Khanza Dwi Avianti" class="profile-photo">
+      <div class="cap">
+        <span>Alysha Khanza D. A.</span>
+        <span>Sains Data · 2024</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="tentang" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">Tentang</div>
+      <h2>Sedikit tentang saya</h2>
+    </div>
+    <div class="about-grid">
+      <p>Saya mahasiswi Sains Data yang tertarik pada bagaimana data dan metode komputasi bisa mengubah sesuatu yang awalnya cuma angka mentah jadi insight yang bermakna. Saya juga senang belajar hal baru di luar itu, dari machine learning, pengembangan aplikasi, sampai konsep komputasi awan.</p>
+      <div>
+        <div class="stat-row">
+          <div class="stat"><b>5</b><span>proyek ditampilkan</span></div>
+          <div class="stat"><b>3</b><span>proyek kolaborasi tim</span></div>
+          <div class="stat"><b>83.6%</b><span>akurasi model terbaik</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="proyek" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">Proyek</div>
+      <h2>Yang sudah saya kerjakan</h2>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="card">
+        <div class="tag-row"><span class="tag gold">Unggulan</span><span class="tag">Python</span><span class="tag">Big Data</span><span class="tag">NLP</span></div>
+        <h3>Analisis Sentimen Ulasan E-Commerce Indonesia</h3>
+        <p>Proyek UAS Big Data: menganalisis ±28 ribu ulasan pengguna Shopee, Lazada, dan Tokopedia dari Google Play Store. Menggunakan <em>hybrid labeling</em> (rating + lexicon) untuk melabeli sentimen tanpa anotasi manual, lalu melatih model Complement Naive Bayes dengan fitur TF-IDF. Hasil akhir: akurasi 83,6% dan F1-score 84%, lengkap dengan analisis aspek (pengiriman, harga, layanan) per platform.</p>
+        <div class="note">Dikerjakan bersama tim (Kelompok 7): Steffany Claussia Fernanda, Laudya Meitaneia Sianturi, dan Alysha Khanza.</div>
+        <div class="links">
+          <a href="https://github.com/laudyaaaa/Projek_BIGDATA" target="_blank" rel="noopener">Lihat notebook</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tag-row"><span class="tag">Jupyter Notebook</span><span class="tag gold">Metode Numerik</span></div>
+        <h3>Analisis Numerik</h3>
+        <p>Kumpulan tugas individu selama mata kuliah Analisis Numerik, implementasi metode seperti Newton-Raphson, bisection, dan interpolasi untuk menyelesaikan persamaan non-linear secara komputasional, sebagai latihan dasar sebelum masuk ke proyek data yang lebih besar.</p>
+        <div class="links">
+          <a href="https://github.com/alyshakhanza/AnalisNumerik" target="_blank" rel="noopener">Lihat kode</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tag-row"><span class="tag">JavaScript</span><span class="tag gold">Gemini AI</span><span class="tag">Solo Project</span></div>
+        <h3>ChuuDay: Your Day, Your Story</h3>
+        <p>Aplikasi fitness journaling harian yang dibangun sendiri dari nol, mencatat mood, olahraga, foto, dan lagu tiap hari, lalu memberi <em>AI health insight</em> otomatis lewat Gemini API. Dilengkapi kalender mood, dashboard statistik, badge achievement, dan kartu recap yang bisa dibagikan. Dibuat untuk kompetisi #JuaraVibeCoding 2026 by Google.</p>
+        <div class="links">
+          <a href="https://github.com/alyshakhanza/Chuuday-Komputasi-awan" target="_blank" rel="noopener">Lihat kode</a>
+          <a href="https://chuuday-862792092664.asia-southeast1.run.app" target="_blank" rel="noopener">Live demo</a>
+        </div>
+      </div>
+
+      <div class="card collab">
+        <div class="tag-row"><span class="tag">HTML</span><span class="tag gold">Kolaborasi</span></div>
+        <h3>ATK CRUD: E-commerce Alat Tulis Kantor</h3>
+        <p>Aplikasi e-commerce sederhana untuk penjualan alat tulis kantor (ATK), dengan fungsi create, read, update, dan delete untuk mengelola produk. Dikerjakan berdua dengan teman di repository ini.</p>
+        <div class="note">Dokumentasi masih disusun ulang. README lengkap menyusul.</div>
+        <div class="links">
+          <a href="https://github.com/alyshakhanza/atk-crud" target="_blank" rel="noopener">Lihat kode</a>
+        </div>
+      </div>
+
+      <div class="card collab">
+        <div class="tag-row"><span class="tag">Cloud Computing</span><span class="tag gold">Kolaborasi</span><span class="tag">Supabase</span></div>
+        <h3>SkyCast: Secret Chat Application</h3>
+        <p>Aplikasi web dua lapisan untuk UAS Cloud Computing: tampilan luar berupa aplikasi cuaca real-time, tapi menyembunyikan sistem chat rahasia (mirip Discord) yang diakses lewat gestur ketuk 5x + PIN. Dibangun di atas Google Cloud Run dengan Supabase untuk autentikasi dan realtime chat. Peran saya membangun web dan database.</p>
+        <div class="note">Proyek Kelompok 7, Cloud Computing UAS 2026, bersama Steffany, Laudya, dan Adrian.</div>
+        <div class="links">
+          <a href="https://github.com/steffanyclaussia/weather.app" target="_blank" rel="noopener">Lihat kode</a>
+          <a href="https://genai-app-weathersecretchat-1-1781340379027-91990162992.us-central1.run.app/" target="_blank" rel="noopener">Live demo</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skill" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">Skill</div>
+      <h2>Yang sedang saya pelajari &amp; kuasai</h2>
+    </div>
+    <div class="skills-table">
+      <div class="skill-row"><span class="label">Python &amp; Data Analysis</span><span class="track"><span class="fill" style="width:78%"></span></span><span class="pct">latihan</span></div>
+      <div class="skill-row"><span class="label">NLP &amp; Text Mining</span><span class="track"><span class="fill" style="width:68%"></span></span><span class="pct">latihan</span></div>
+      <div class="skill-row"><span class="label">Machine Learning</span><span class="track"><span class="fill" style="width:65%"></span></span><span class="pct">latihan</span></div>
+      <div class="skill-row"><span class="label">Analisis Numerik</span><span class="track"><span class="fill" style="width:70%"></span></span><span class="pct">latihan</span></div>
+      <div class="skill-row"><span class="label">Web Dev &amp; Cloud (Supabase/GCP)</span><span class="track"><span class="fill" style="width:55%"></span></span><span class="pct">belajar</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="kontak">
+  <div class="wrap">
+    <div class="contact-box">
+      <div>
+        <h2>Mari terhubung</h2>
+        <p>Terbuka untuk kesempatan magang, kolaborasi proyek, atau sekadar diskusi soal data.</p>
+      </div>
+      <div class="contact-links">
+        <a href="https://github.com/alyshakhanza" target="_blank" rel="noopener">GitHub: alyshakhanza</a>
+        <a href="https://linkedin.com/in/alysha-khanza-dwi-avianti-5ba68b325/" target="_blank" rel="noopener">LinkedIn: Alysha Khanza Dwi Avianti</a>
+        <a href="mailto:alyshakhanzada@gmail.com">Email: alyshakhanzada@gmail.com</a>
+      </div>
+    </div>
+    <p class="fine">Dibuat oleh Alysha Khanza Dwi Avianti · UPN "Veteran" Jawa Timur</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
